@@ -25,18 +25,9 @@ return {
           completeopt = "menu,menuone,noinsert" .. (auto_select and "" or ",noselect"),
         },
         preselect = auto_select and cmp.PreselectMode.Item or cmp.PreselectMode.None,
-        mapping = cmp.mapping.preset.insert({
-          ["<Tab>"] = vim.snippet.active({ direction = 1 }),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = auto_select }),
-          ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-          ["<S-CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace }),
-          ["<C-CR>"] = function(fallback)
-            cmp.abort()
-            fallback()
-          end,
-        }),
+        window = {
+          documentation = cmp.config.window.bordered()
+        },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "path" },
@@ -50,26 +41,6 @@ return {
         }
       }
     end,
-    keys = {
-      {
-        "<Tab>",
-        function()
-          return vim.snippet.active({ direction = 1 }) and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-      {
-        "<S-Tab>",
-        function()
-          return vim.snippet.active({ direction = -1 }) and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
-        end,
-        expr = true,
-        silent = true,
-        mode = { "i", "s" },
-      },
-    },
   },
   {
     "echasnovski/mini.pairs",
@@ -86,5 +57,5 @@ return {
       -- better deal with markdown code blocks
       markdown = true,
     },
-  }
+  },
 }
