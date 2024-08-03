@@ -38,7 +38,12 @@ return {
           expand = function(item)
             return vim.snippet.expand(item.body)
           end,
-        }
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+          ['<Esc>'] = cmp.mapping.abort(),
+        })
       }
     end,
   },

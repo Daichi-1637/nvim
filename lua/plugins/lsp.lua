@@ -11,27 +11,16 @@ return {
 
       mason_config.setup()
 
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities();
+
       mason_config.setup_handlers {
         function(server_name)
-          require('lspconfig')[server_name].setup {
-            capabilities = require("cmp_nvim_lsp").default_capabilities(),
+          lspconfig[server_name].setup {
+            capabilities = capabilities,
           }
         end,
       }
     end,
-    opts = {
-      servers = {
-        phpactor = {
-          enabled = lsp == "phpactor",
-        },
-      }
-    }
   },
-  {
-    "gbprod/phpactor.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "neovim/nvim-lspconfig"
-    },
-  }
 }
